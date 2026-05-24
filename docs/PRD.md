@@ -8,8 +8,8 @@
 | **版本** | V1.0 MVP（面试演示版） |
 | **文档状态** | 已确认（指标 V1.1 + 交付方案 V1.2） |
 | **目标岗位** | 字节跳动 · AI 产品运营（创作者运营方向） |
-| **交付方案** | **Gitee Pages 静态站点 + 前端 Mock**（1 天面试优先） |
-| **在线演示** | `https://<用户名>.gitee.io/<仓库名>/`（部署后填写） |
+| **交付方案** | **GitHub Pages + 前端 Mock**（push 后 Actions 自动部署） |
+| **在线演示** | https://aurora132731.github.io/douyin-creator-ai/ |
 | **配套资料** | 见 [§11.3 面试资料索引](#113-面试资料索引) |
 
 ### 交付方案说明（已锁定）
@@ -18,11 +18,12 @@
 
 | 项 | 面试版（当前） | 后续版本 |
 |----|----------------|----------|
-| 托管 | Gitee Pages（`gh-pages` 分支） | 可迁 CloudBase 等 |
+| 托管 | GitHub Pages（GitHub Actions） | — |
+| 代码仓 | https://github.com/aurora132731/douyin-creator-ai | — |
 | AI 能力 | `aiEngine.ts` 规则模板 | V1.1 豆包/通义 API |
 | 数据 | `mockData.ts` + localStorage | V1.2 抖音开放平台 |
-| 成本 | 0 元，国内访问快 | 按量计费 |
-| 部署文档 | `README.md`、`docs/面试部署清单.md` | — |
+| 成本 | 0 元 | — |
+| 部署文档 | `docs/部署-GitHubPages.md` | — |
 
 **为何选此方案（面试口述）：** 1 天内优先验证 **产品链路、指标口径、交互闭环**；真 API 与真实数据放在路线图，体现「先验证机制，再接入能力」的产品节奏。
 
@@ -112,7 +113,7 @@
 
 ### 3.2 非目标（Out of Scope）
 
-**面试交付版（Gitee Pages + Mock）明确不做：**
+**面试交付版（GitHub Pages + Mock）明确不做：**
 
 - 后端服务、数据库、用户登录体系
 - 真实 LLM API 调用（密钥、流式、计费）
@@ -400,12 +401,12 @@ AI 建议（选题/脚本/合规）
 | AC-08 | 生命周期 5 步可完成并打勾 | 走通主流程 |
 | AC-09 | PRD 页展示完整方案摘要 | 目视检查 |
 | AC-10 | `npm run build` 成功 | 构建命令 |
-| AC-11 | Gitee Pages 可访问，主流程可点通 | 手机+电脑打开演示链接 |
+| AC-11 | GitHub Pages 可访问，主流程可点通 | https://aurora132731.github.io/douyin-creator-ai/ |
 | AC-12 | 页内/指标页可见 Mock 免责声明 | 目视检查 |
 
 ---
 
-## 8. 技术方案（MVP · Gitee Pages + Mock）
+## 8. 技术方案（MVP · GitHub Pages + Mock）
 
 | 项 | 选型 |
 |----|------|
@@ -413,19 +414,18 @@ AI 建议（选题/脚本/合规）
 | AI | 规则引擎（`app/src/services/aiEngine.ts`），**模拟** LLM 输出 |
 | 数据 | `app/src/data/mockData.ts`；画像 `localStorage` |
 | 图表 | Recharts |
-| 构建 | `npm run build` → 静态资源 `app/dist` |
-| 托管 | **Gitee Pages**，分支 `gh-pages`，根目录部署 |
-| 路径 | `vite.config.ts` 中 `base` 默认 `./`；404 时设 `VITE_BASE_PATH=/仓库名/` |
-| 部署脚本 | `scripts/deploy-gitee.ps1` |
-| 操作手册 | `README.md`、`docs/面试部署清单.md` |
+| 构建 | `npm run build` → `app/dist` |
+| 托管 | **GitHub Pages**（`.github/workflows/deploy-github-pages.yml`） |
+| 路径 | CI 设置 `VITE_BASE_PATH=/douyin-creator-ai/` |
+| 操作手册 | `docs/部署-GitHubPages.md` |
 
-### 8.1 部署流程（面试前必做）
+### 8.1 部署流程
 
 ```
-npm install && npm run build
-  → deploy-gitee.ps1 推送 dist 到 gh-pages
-    → Gitee 仓库「服务 → Pages」启动
-      → 获得 https://<用户>.gitee.io/<仓库>/
+git push github main
+  → GitHub Actions 构建 app/
+    → 部署到 GitHub Pages
+      → https://aurora132731.github.io/douyin-creator-ai/
 ```
 
 ### 8.2 Mock 边界（答辩用）
@@ -443,7 +443,7 @@ npm install && npm run build
 
 | 版本 | 内容 | 与面试关系 |
 |------|------|------------|
-| **V1.0（当前）** | Gitee Pages + 规则引擎 + Mock + 全链路 UI | **明天面试交付** |
+| **V1.0（当前）** | GitHub Pages + 规则引擎 + Mock + 全链路 UI | **面试交付** |
 | **V1.1** | 接入豆包/通义 API，真实 LLM 生成 | 口述路线图 |
 | **V1.2** | 抖音开放平台；L1 真实指标回流 | 口述路线图 |
 | **V2.0** | 搜索词选题、进度条掉点、A/B 平台化 | 远期规划 |
@@ -492,13 +492,13 @@ npm install && npm run build
 | **部署清单** | 面试前 1 天逐步打勾 | `docs/面试部署清单.md` |
 | **面试讲稿** | 3 分钟口述 + 高频追问 | `docs/面试讲稿.md` |
 | **README** | 本地运行、Gitee 推送、Pages 开启 | `README.md` |
-| **Web 演示** | 可交互原型 | Gitee Pages 链接 |
+| **Web 演示** | 可交互原型 | GitHub Pages 链接 |
 | **应用内 PRD** | 演示时快速展示摘要 | App →「产品方案」 |
 
 **发给面试官的最小资料包：**
 
-1. 在线演示链接（Gitee Pages）  
-2. Gitee 仓库链接（含 `docs/PRD.md`）  
+1. 在线演示：https://aurora132731.github.io/douyin-creator-ai/  
+2. GitHub 仓库：https://github.com/aurora132731/douyin-creator-ai  
 3. 一句话说明：Mock 演示，覆盖全链路与双层指标  
 
 ### 11.4 文档修订记录
@@ -508,7 +508,8 @@ npm install && npm run build
 | V1.0 | 2026-05 | 初版 MVP PRD |
 | V1.1 | 2026-05 | 核心指标双层体系；抖音/小红书/快手/JD 来源 |
 | V1.2 | 2026-05 | 锁定交付：Gitee Pages + Mock；补充部署与 AC-11/12 |
+| V1.3 | 2026-05 | 改为 GitHub Pages；移除 Vercel |
 
 ---
 
-*本文档为「创灵」面试演示项目产品需求说明，不代表字节跳动官方立场。演示数据为 Mock，托管于 Gitee Pages。*
+*本文档为「创灵」面试演示项目产品需求说明，不代表字节跳动官方立场。演示数据为 Mock，托管于 GitHub Pages。*

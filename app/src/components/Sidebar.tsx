@@ -77,7 +77,7 @@ export function Sidebar({ active, onNavigate }: Props) {
         <div className="rounded-xl bg-douyin-card p-3 text-[11px] leading-relaxed text-douyin-muted">
           <span className="text-douyin-cyan">面试演示版</span>
           <br />
-          Gitee Pages · Mock 数据
+          GitHub Pages · Mock
           <br />
           <span className="text-[10px] opacity-80">非字节官方产品</span>
         </div>

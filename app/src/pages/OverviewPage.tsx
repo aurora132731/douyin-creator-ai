@@ -157,7 +157,7 @@ export function OverviewPage({
         <p className="mt-2 text-sm leading-relaxed text-douyin-muted">
           点击「开始演示」→ 改画像 → 选题采纳 → 生成脚本 → 发布（复制标题/标签）→ 合规（点「违规样例」）→
           指标（L1+L2）→ 产品方案。本版为{" "}
-          <strong className="text-white">Gitee Pages + Mock</strong>。口述稿：{" "}
+          <strong className="text-white">GitHub Pages + Mock</strong>。口述稿：{" "}
           <code className="text-douyin-cyan">docs/面试讲稿.md</code>
         </p>
       </div>
