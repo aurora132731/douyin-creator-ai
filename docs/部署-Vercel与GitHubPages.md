@@ -12,7 +12,7 @@
 **建议：优先 Vercel；若 Vercel 打不开再试 GitHub Pages。**
 
 代码仓库（Gitee 已有）：https://gitee.com/aurorahyc/douyin-creator-ai  
-建议 **同步一份到 GitHub**（Vercel / Pages 都从 GitHub 拉代码最省事）。
+GitHub 仓库：**https://github.com/aurora132731/douyin-creator-ai**（已推送）
 
 ---
 
