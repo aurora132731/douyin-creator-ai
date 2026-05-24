@@ -12,10 +12,15 @@ $Root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 $AppDir = Join-Path $Root "app"
 $TmpDir = Join-Path $Root ".deploy-tmp"
 
+$npm = "npm"
+if (Test-Path "$env:ProgramFiles\nodejs\npm.cmd") {
+  $npm = "$env:ProgramFiles\nodejs\npm.cmd"
+}
+
 Write-Host ">> 安装依赖并构建..." -ForegroundColor Cyan
 Push-Location $AppDir
-npm install
-npm run build
+& $npm install
+& $npm run build
 if ($LASTEXITCODE -ne 0) { Pop-Location; exit 1 }
 Pop-Location
 

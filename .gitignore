@@ -27,3 +27,6 @@ npm-debug.log*
 
 # Local deploy temp
 .deploy-tmp/
+
+# Tencent upload zip (optional, dist is gitignored)
+release/*.zip

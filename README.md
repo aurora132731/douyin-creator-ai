@@ -51,10 +51,21 @@ git push -u origin main
 
 ---
 
-## 三、免费上线给面试官看（国内访问）
+## 三、免费上线给面试官看
 
-推荐 **Gitee Pages**（免费、国内快，和 Gitee 代码在一起）。  
-备选见文末。
+| 方案 | 推荐度 | 说明 |
+|------|--------|------|
+| **[Vercel](https://vercel.com)** | ⭐ 首选 | 连 GitHub 一键部署，约 5 分钟 |
+| **[GitHub Pages](https://pages.github.com)** | 备选 | push 后 Actions 自动部署 |
+| 腾讯云 | 可选 | 见 [`docs/腾讯云部署.md`](docs/腾讯云部署.md) |
+
+**完整步骤：** [`docs/部署-Vercel与GitHubPages.md`](docs/部署-Vercel与GitHubPages.md)
+
+```text
+1. 把代码 push 到 GitHub
+2. Vercel 导入仓库，Root Directory 填 app → Deploy
+3. 得到 https://xxx.vercel.app 发给面试官
+```
 
 ### 方式 A：脚本一键部署（推荐）
 
