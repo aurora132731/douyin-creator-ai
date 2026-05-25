@@ -23,7 +23,7 @@
 | AI 能力 | `aiEngine.ts` 规则模板 | V1.1 豆包/通义 API |
 | 数据 | `mockData.ts` + localStorage | V1.2 抖音开放平台 |
 | 成本 | 0 元 | — |
-| 部署文档 | `docs/部署-GitHubPages.md` | — |
+| 部署文档 | `docs/面试部署清单.md` | — |
 
 **为何选此方案（面试口述）：** 1 天内优先验证 **产品链路、指标口径、交互闭环**；真 API 与真实数据放在路线图，体现「先验证机制，再接入能力」的产品节奏。
 
@@ -417,7 +417,7 @@ AI 建议（选题/脚本/合规）
 | 构建 | `npm run build` → `app/dist` |
 | 托管 | **GitHub Pages**（`.github/workflows/deploy-github-pages.yml`） |
 | 路径 | CI 设置 `VITE_BASE_PATH=/douyin-creator-ai/` |
-| 操作手册 | `docs/部署-GitHubPages.md` |
+| 操作手册 | `docs/面试部署清单.md` |
 
 ### 8.1 部署流程
 

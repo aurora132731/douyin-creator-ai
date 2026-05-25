@@ -6,8 +6,7 @@
 - **GitHub**：https://github.com/aurora132731/douyin-creator-ai
 - **Gitee（备份）**：https://gitee.com/aurorahyc/douyin-creator-ai
 - **完整 PRD**：[`docs/PRD.md`](docs/PRD.md)
-- **部署指南**：[`docs/部署-GitHubPages.md`](docs/部署-GitHubPages.md)
-- **面试清单**：[`docs/面试部署清单.md`](docs/面试部署清单.md)
+- **面试部署清单**：[`docs/面试部署清单.md`](docs/面试部署清单.md)（含 GitHub Pages 步骤）
 - **3 分钟讲稿**：[`docs/面试讲稿.md`](docs/面试讲稿.md)
 
 **交付方案：** GitHub Pages + 前端 Mock（无后端 / 无真 API）
@@ -45,7 +44,7 @@ git push github main
 2. **Source** → **GitHub Actions**
 3. 在 [Actions](https://github.com/aurora132731/douyin-creator-ai/actions) 确认部署成功
 
-详见 [`docs/部署-GitHubPages.md`](docs/部署-GitHubPages.md)。
+详见 [`docs/面试部署清单.md`](docs/面试部署清单.md)。
 
 ---
 

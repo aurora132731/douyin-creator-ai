@@ -6,7 +6,7 @@ const SECTIONS = [
 • 在线：https://aurora132731.github.io/douyin-creator-ai/
 • 仓库：https://github.com/aurora132731/douyin-creator-ai
 • 部署：push main → GitHub Actions 自动发布
-• 文档：docs/部署-GitHubPages.md
+• 文档：docs/面试部署清单.md
 
 V1.1 真 LLM，V1.2 抖音开放平台数据。`,
   },
@@ -121,7 +121,7 @@ export function PrdPage() {
         <strong className="text-white">完整 PRD（V1.1）</strong> 见{" "}
         <code className="rounded bg-douyin-dark px-1.5 py-0.5 text-douyin-cyan">docs/PRD.md</code>
         <p className="mt-2 text-xs leading-relaxed">
-          含交付方案、功能详述、GitHub Pages 部署、指标公式。配套 docs/部署-GitHubPages.md。演示为 Mock，非官方产品。
+          含交付方案、功能详述、指标公式。部署见 docs/面试部署清单.md。演示为 Mock，非官方产品。
         </p>
       </div>
     </div>
