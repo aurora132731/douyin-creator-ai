@@ -18,7 +18,8 @@ const NAV: { id: TabId; label: string; icon: typeof LayoutDashboard; group?: str
   { id: "publish", label: "发布助手", icon: Send },
   { id: "compliance", label: "合规预检", icon: Shield },
   { id: "growth", label: "成长复盘", icon: TrendingUp },
-  { id: "metrics", label: "数据指标", icon: BarChart3, group: "运营" },
+  { id: "diagnosis", label: "AI 作品诊断", icon: Sparkles, group: "运营" },
+  { id: "metrics", label: "数据指标", icon: BarChart3 },
   { id: "prd", label: "产品方案", icon: FileText },
 ];
 

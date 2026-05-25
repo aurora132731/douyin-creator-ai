@@ -1,33 +1,59 @@
-import { Lightbulb, TrendingUp } from "lucide-react";
+import { ArrowRight, Lightbulb, Sparkles, TrendingUp } from "lucide-react";
 import { useMemo } from "react";
 import { generateGrowthInsights } from "../services/aiEngine";
-import type { CreatorProfile } from "../types";
+import type { CreatorProfile, TabId } from "../types";
 
 interface Props {
   profile: CreatorProfile;
+  onNavigate: (tab: TabId) => void;
   onComplete: () => void;
 }
 
-export function GrowthPage({ profile, onComplete }: Props) {
+export function GrowthPage({ profile, onNavigate, onComplete }: Props) {
   const insights = useMemo(() => generateGrowthInsights(profile), [profile]);
 
   return (
     <div className="animate-slide-up space-y-6">
       <header>
-        <h1 className="text-xl font-bold flex items-center gap-2">
+        <h1 className="flex items-center gap-2 text-xl font-bold">
           <TrendingUp className="h-6 w-6 text-douyin-pink" />
           成长复盘
         </h1>
         <p className="mt-1 text-sm text-douyin-muted">
-          数据驱动的下期行动建议 — 留存、转化、内容质量综合诊断
+          结合 AI 作品诊断结果，生成下期可执行行动
         </p>
       </header>
 
+      <div className="glass-card border-douyin-pink/30 bg-gradient-to-r from-douyin-pink/10 to-douyin-cyan/5 p-5">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 className="flex items-center gap-2 font-semibold">
+              <Sparkles className="h-5 w-5 text-douyin-pink" />
+              先看 AI 作品诊断
+            </h2>
+            <p className="mt-1 text-sm text-douyin-muted">
+              抖音四段漏斗数据 + 小红书式分维度解读（现状/原因/建议）
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              onNavigate("diagnosis");
+              onComplete();
+            }}
+            className="btn-primary flex items-center gap-2"
+          >
+            进入诊断
+            <ArrowRight className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+
       <div className="grid gap-4 sm:grid-cols-3">
         {[
-          { label: "涨粉量（7日）", value: "+1,240", sub: "参考抖音创作者中心", src: "L1" },
-          { label: "完播率", value: "38.5%", sub: "高于垂类均值 2.1pp", src: "L1" },
-          { label: "5秒完播率", value: "41%", sub: "钩子优化空间", src: "L1" },
+          { label: "涨粉数（7日）", value: "+1,240", sub: "抖音 §内容深度", src: "L1" },
+          { label: "5秒完播率", value: "35.8%", sub: "低于同类中位 44.9%", src: "待提升" },
+          { label: "新用户占比", value: "12%", sub: "观众分析 · 破圈空间", src: "L1" },
         ].map((m) => (
           <div key={m.label} className="glass-card p-5 text-center">
             <div className="text-2xl font-bold gradient-text">{m.value}</div>
@@ -42,7 +68,7 @@ export function GrowthPage({ profile, onComplete }: Props) {
       <div className="glass-card p-5">
         <h2 className="mb-4 flex items-center gap-2 font-semibold">
           <Lightbulb className="h-5 w-5 text-amber-400" />
-          AI 成长建议（个性化）
+          下期行动建议（基于诊断 weakest 维度）
         </h2>
         <div className="space-y-3">
           {insights.map((tip, i) => (
@@ -57,16 +83,14 @@ export function GrowthPage({ profile, onComplete }: Props) {
         </div>
         <button
           type="button"
-          onClick={onComplete}
+          onClick={() => {
+            onComplete();
+            onNavigate("topic");
+          }}
           className="btn-primary mt-5 w-full"
         >
-          标记复盘完成，回到选题
+          完成复盘，回到选题
         </button>
-      </div>
-
-      <div className="glass-card p-4 text-xs text-douyin-muted">
-        <strong className="text-gray-300">闭环：</strong>
-        成长复盘 → 提炼下期选题方向 → 回到「AI 选题」，形成创作者增长飞轮。指标：成长转化率、创作者满意度。
       </div>
     </div>
   );

@@ -53,7 +53,7 @@ export function PublishPage({ profile, selectedTopic, onComplete }: Props) {
       <header>
         <h1 className="text-xl font-bold">发布助手</h1>
         <p className="mt-1 text-sm text-douyin-muted">
-          发布前检查清单 + 垂类最佳时段 + AI 标题/标签草稿（对标快手粉丝活跃时段）
+          发布前检查清单 + 垂类最佳时段 + AI 标题/标签草稿（优化 §1 封面点击率）
         </p>
       </header>
 
@@ -157,7 +157,7 @@ export function PublishPage({ profile, selectedTopic, onComplete }: Props) {
               ))}
             </div>
             <p className="mt-4 text-xs text-douyin-muted">
-              参考快手创作者中心「粉丝活跃时段」思路（演示 Mock）
+              按垂类播放高峰统计（演示 Mock · 抖音发布策略）
             </p>
           </div>
 

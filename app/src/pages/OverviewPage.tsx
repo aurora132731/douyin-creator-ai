@@ -12,7 +12,7 @@ interface Props {
 
 function formatKpiValue(key: string, val: number): string {
   if (key === "creatorSatisfaction") return `${val}/5`;
-  if (key === "retention" || key === "growthConversion" || key === "aiAccuracy")
+  if (key === "retention" || key === "growthConversion" || key === "aiDiagnosisEffective")
     return `${val}%`;
   return `${val}分`;
 }
@@ -155,8 +155,8 @@ export function OverviewPage({
       <div className="glass-card border-douyin-cyan/20 bg-gradient-to-r from-douyin-cyan/5 to-douyin-pink/5 p-5">
         <h3 className="font-semibold">面试演示建议（约 3 分钟）</h3>
         <p className="mt-2 text-sm leading-relaxed text-douyin-muted">
-          点击「开始演示」→ 改画像 → 选题采纳 → 生成脚本 → 发布（复制标题/标签）→ 合规（点「违规样例」）→
-          指标（L1+L2）→ 产品方案。本版为{" "}
+          点击「开始演示」→ 选题 → 脚本 → 发布 → 合规 →{" "}
+          <strong className="text-white">AI 作品诊断</strong>（开始诊断）→ 指标（四段漏斗+P3）→ 产品方案。本版{" "}
           <strong className="text-white">GitHub Pages + Mock</strong>。口述稿：{" "}
           <code className="text-douyin-cyan">docs/面试讲稿.md</code>
         </p>

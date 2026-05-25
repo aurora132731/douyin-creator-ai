@@ -40,9 +40,9 @@ export const SENSITIVE_WORDS = [
 export const DEFAULT_METRICS: MetricSnapshot = {
   retention: 42,
   creativeEfficiency: 68,
-  contentQuality: 75,
+  contentQuality: 72,
   growthConversion: 12,
-  aiAccuracy: 81,
+  aiDiagnosisEffective: 81,
   creatorSatisfaction: 4.2,
 };
 
@@ -126,11 +126,11 @@ export const KPI_DEFINITIONS: KpiDefinition[] = [
   {
     key: "contentQuality",
     name: "P3 内容质量",
-    desc: "采纳 AI 作品的质量综合分",
+    desc: "采纳 AI 作品的质量综合分（见 PRD §6.4）",
     target: "≥ 70 分",
     layer: "L2",
     source: "岗位 JD · 内容质量",
-    formula: "5秒完播×40% + 完播×35% + 互动×25%",
+    formula: "5秒完播×35% + 全片完播×30% + 互动×20% + CTR×15%",
   },
   {
     key: "growthConversion",
@@ -142,13 +142,13 @@ export const KPI_DEFINITIONS: KpiDefinition[] = [
     formula: "L1：抖音涨粉量/粉丝净增量",
   },
   {
-    key: "aiAccuracy",
-    name: "P5 AI 建议准确率",
-    desc: "采纳且 7 日内 L1 指标正向的建议占比",
+    key: "aiDiagnosisEffective",
+    name: "P5 AI 诊断有效率",
+    desc: "采纳某维度建议后，该维度 L1 优于同类中位数占比",
     target: "≥ 80%",
     layer: "L2",
     source: "岗位 JD · AI 准确度",
-    formula: "例：5秒完播 > 近10条均值",
+    formula: "分维度对标（学 XHS 笔记诊断）",
   },
   {
     key: "creatorSatisfaction",
@@ -160,42 +160,45 @@ export const KPI_DEFINITIONS: KpiDefinition[] = [
   },
 ];
 
-/** L1：平台原生指标（演示 mock 值） */
-export const L1_PLATFORM_METRICS = [
+/** L1：抖音作品数据详情 · 四段漏斗（演示 Mock） */
+export const L1_FUNNEL_SECTIONS = [
   {
-    name: "5秒完播率",
-    value: "41%",
-    source: "抖音创作者中心",
-    note: "验证 F2 钩子 AI",
+    segment: 1,
+    title: "流量转化",
+    tip: "优化封面标题，提升观看转化",
+    metrics: [
+      { label: "曝光量", value: "1,332", fanShare: "粉丝 1.6%" },
+      { label: "播放量", value: "276", fanShare: "粉丝 0.7%" },
+      { label: "封面点击率", value: "13.1%", fanShare: "粉丝 0%", highlight: true },
+    ],
   },
   {
-    name: "完播率",
-    value: "36%",
-    source: "抖音创作者中心",
-    note: "内容质量核心",
+    segment: 2,
+    title: "开头吸引力",
+    tip: "把握视频节奏，留下更多观众",
+    metrics: [
+      { label: "2秒退出率", value: "28.2%", fanShare: "粉丝 50%", highlight: true },
+      { label: "5秒完播率", value: "35.8%", fanShare: "粉丝 0%" },
+    ],
   },
   {
-    name: "互动率",
-    value: "5.8%",
-    source: "抖音 + 小红书拆解",
-    note: "(赞+评+分享)/播放",
+    segment: 3,
+    title: "互动表现",
+    tip: "创造互动场景，引发观众互动",
+    metrics: [
+      { label: "互动率", value: "1.5%", fanShare: "粉丝 0%", highlight: true },
+      { label: "点赞", value: "3" },
+      { label: "评论", value: "0" },
+    ],
   },
   {
-    name: "涨粉量（7日）",
-    value: "+1,240",
-    source: "抖音创作者中心",
-    note: "成长转化 P4 代理",
+    segment: 4,
+    title: "内容深度",
+    tip: "增加内容价值，带来更多涨粉",
+    metrics: [
+      { label: "平均观看时长", value: "3.8秒", fanShare: "粉丝 2.4秒", highlight: true },
+      { label: "全片完播率", value: "17.9%" },
+      { label: "涨粉数", value: "0" },
+    ],
   },
-  {
-    name: "CTR",
-    value: "9.2%",
-    source: "小红书笔记分析",
-    note: "发布标题优化 F3",
-  },
-  {
-    name: "粉丝活跃峰值",
-    value: "21:00-22:00",
-    source: "快手数据中心",
-    note: "发布时段建议 F3",
-  },
-];
+] as const;

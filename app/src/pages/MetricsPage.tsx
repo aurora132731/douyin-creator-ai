@@ -10,7 +10,8 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { EXPERIMENTS, KPI_DEFINITIONS, L1_PLATFORM_METRICS, METRIC_HISTORY } from "../data/mockData";
+import { P3_QUALITY_FORMULA } from "../data/diagnosisMock";
+import { EXPERIMENTS, KPI_DEFINITIONS, L1_FUNNEL_SECTIONS, METRIC_HISTORY } from "../data/mockData";
 import type { MetricSnapshot } from "../types";
 
 interface Props {
@@ -25,39 +26,70 @@ export function MetricsPage({ metrics }: Props) {
       <header>
         <h1 className="text-xl font-bold">数据指标 & A/B 实验</h1>
         <p className="mt-1 text-sm text-douyin-muted">
-          双层体系：L1 平台指标验证内容是否变好 · L2 产品指标（对齐 JD）验证工具是否可迭代
+          L1【抖音】作品数据详情四段漏斗 · L2【JD】产品指标 · 诊断交互借鉴【小红书】
         </p>
       </header>
-
-      <div className="glass-card border-douyin-cyan/20 bg-douyin-cyan/5 p-4 text-xs leading-relaxed text-douyin-muted">
-        <strong className="text-douyin-cyan">指标逻辑链：</strong> AI 建议 → 采纳发布 → L1 平台指标变化 →
-        反哺 P5 准确率 / P6 满意度 → 驱动功能迭代。完整定义见{" "}
-        <code className="text-douyin-cyan">docs/PRD.md</code> 第 6 章。
-      </div>
 
       <section>
         <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold">
           <span className="rounded bg-douyin-pink/20 px-2 py-0.5 text-douyin-pink">L1</span>
-          平台原生指标（内容结果层 · 演示 Mock）
+          抖音作品数据详情 · 四段漏斗（Mock）
         </h2>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {L1_PLATFORM_METRICS.map((m) => (
-            <div key={m.name} className="glass-card p-4">
-              <div className="flex items-baseline justify-between">
-                <span className="text-xs text-douyin-muted">{m.name}</span>
-                <span className="text-lg font-bold">{m.value}</span>
+        <div className="space-y-4">
+          {L1_FUNNEL_SECTIONS.map((sec) => (
+            <div key={sec.segment} className="glass-card overflow-hidden">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-douyin-border bg-douyin-dark/50 px-4 py-3">
+                <h3 className="text-sm font-semibold">
+                  {sec.segment}. {sec.title}
+                </h3>
+                <span className="text-[10px] text-douyin-muted">{sec.tip}</span>
               </div>
-              <p className="mt-2 text-[10px] text-douyin-cyan">参考：{m.source}</p>
-              <p className="mt-1 text-[11px] text-douyin-muted">{m.note}</p>
+              <div className="grid gap-2 p-4 sm:grid-cols-3">
+                {sec.metrics.map((m) => (
+                  <div
+                    key={m.label}
+                    className={`rounded-lg border p-3 ${
+                      "highlight" in m && m.highlight
+                        ? "border-douyin-pink/30 bg-douyin-pink/5"
+                        : "border-douyin-border bg-douyin-dark/30"
+                    }`}
+                  >
+                    <div className="text-[10px] text-douyin-muted">{m.label}</div>
+                    <div className="text-base font-bold">{m.value}</div>
+                    {"fanShare" in m && m.fanShare && (
+                      <div className="text-[10px] text-douyin-muted">{m.fanShare}</div>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
       </section>
 
+      <div className="glass-card border-douyin-cyan/20 bg-douyin-cyan/5 p-5">
+        <h2 className="mb-3 text-sm font-semibold text-douyin-cyan">{P3_QUALITY_FORMULA.title}</h2>
+        <p className="font-mono text-xs text-gray-300">{P3_QUALITY_FORMULA.expression}</p>
+        <p className="mt-2 text-[11px] text-douyin-muted">{P3_QUALITY_FORMULA.normalize}</p>
+        <div className="mt-4 space-y-2">
+          {P3_QUALITY_FORMULA.weights.map((w) => (
+            <div
+              key={w.metric}
+              className="rounded-lg border border-douyin-border bg-douyin-dark/50 px-3 py-2 text-[11px]"
+            >
+              <strong className="text-white">{w.pct}</strong> {w.metric}
+              <span className="text-douyin-cyan"> · {w.source}</span>
+              <p className="mt-1 text-douyin-muted">{w.rationale}</p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-3 text-[10px] text-douyin-muted">{P3_QUALITY_FORMULA.xhsReference}</p>
+      </div>
+
       <section>
         <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold">
           <span className="rounded bg-purple-500/20 px-2 py-0.5 text-purple-300">L2</span>
-          AI 产品指标（对齐岗位 JD）
+          AI 产品指标（对齐 JD）
         </h2>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {l2Kpis.map((k) => {
@@ -65,7 +97,7 @@ export function MetricsPage({ metrics }: Props) {
             const display =
               k.key === "creatorSatisfaction"
                 ? `${val} / 5`
-                : `${val}${["growthConversion", "aiAccuracy", "retention"].includes(k.key as string) ? "%" : k.key === "creativeEfficiency" ? "分" : k.key === "contentQuality" ? "分" : ""}`;
+                : `${val}${["growthConversion", "aiDiagnosisEffective", "retention"].includes(k.key as string) ? "%" : k.key === "creativeEfficiency" || k.key === "contentQuality" ? "分" : ""}`;
 
             return (
               <div key={k.key} className="glass-card p-4">
@@ -86,7 +118,7 @@ export function MetricsPage({ metrics }: Props) {
       </section>
 
       <div className="glass-card p-5">
-        <h2 className="mb-4 font-semibold">L2 核心指标趋势（近 4 周 · Mock）</h2>
+        <h2 className="mb-4 font-semibold">L2 趋势（近 4 周 · Mock）</h2>
         <ResponsiveContainer width="100%" height={260}>
           <LineChart data={METRIC_HISTORY}>
             <CartesianGrid strokeDasharray="3 3" stroke="#2a2a35" />
@@ -109,7 +141,7 @@ export function MetricsPage({ metrics }: Props) {
       </div>
 
       <div className="glass-card p-5">
-        <h2 className="mb-4 font-semibold">A/B 实验看板（平台指标当裁判）</h2>
+        <h2 className="mb-4 font-semibold">A/B 实验（抖音指标当裁判）</h2>
         <div className="space-y-3">
           {EXPERIMENTS.map((exp) => (
             <div
@@ -129,34 +161,28 @@ export function MetricsPage({ metrics }: Props) {
                     {exp.status === "running" ? "进行中" : "已完成"}
                   </span>
                 </div>
-                <p className="mt-1 text-xs text-douyin-muted">
-                  A: {exp.variantA} vs B: {exp.variantB}
-                </p>
                 <p className="mt-1 text-[10px] text-douyin-cyan">主指标：{exp.metric}</p>
               </div>
-              <div className="text-right">
-                <div className="text-lg font-bold text-douyin-cyan">+{exp.lift}%</div>
-                <div className="text-[10px] text-douyin-muted">相对提升</div>
-              </div>
+              <div className="text-lg font-bold text-douyin-cyan">+{exp.lift}%</div>
             </div>
           ))}
         </div>
       </div>
 
       <div className="glass-card p-5">
-        <h2 className="mb-4 font-semibold">AI 建议采纳率（按功能 · 影响 P5）</h2>
+        <h2 className="mb-4 font-semibold">诊断采纳率（影响 P5）</h2>
         <ResponsiveContainer width="100%" height={200}>
           <BarChart
             data={[
-              { name: "选题 F1", rate: 62 },
-              { name: "脚本 F2", rate: 55 },
-              { name: "发布 F3", rate: 78 },
+              { name: "流量转化", rate: 72 },
+              { name: "开头吸引力", rate: 58 },
+              { name: "互动表现", rate: 45 },
+              { name: "内容深度", rate: 52 },
               { name: "合规 F4", rate: 91 },
-              { name: "复盘 F5", rate: 48 },
             ]}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#2a2a35" />
-            <XAxis dataKey="name" stroke="#8b8b9a" fontSize={11} />
+            <XAxis dataKey="name" stroke="#8b8b9a" fontSize={10} />
             <YAxis stroke="#8b8b9a" fontSize={12} />
             <Tooltip
               contentStyle={{
@@ -177,7 +203,7 @@ export function MetricsPage({ metrics }: Props) {
       </div>
 
       <p className="text-center text-[10px] text-douyin-muted">
-        指标口径参考抖音创作者中心、小红书笔记分析、快手数据中心及岗位 JD；演示数据为模拟，非官方后台。
+        指标口径：抖音创作者中心作品数据详情；AI 诊断交互借鉴小红书笔记诊断；演示 Mock
       </p>
     </div>
   );

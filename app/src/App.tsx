@@ -8,6 +8,7 @@ import { useCreatorProfile } from "./hooks/useCreatorProfile";
 import { useLifecycleProgress } from "./hooks/useLifecycleProgress";
 import { CompliancePage } from "./pages/CompliancePage";
 import { CreatePage } from "./pages/CreatePage";
+import { DiagnosisPage } from "./pages/DiagnosisPage";
 import { GrowthPage } from "./pages/GrowthPage";
 import { MetricsPage } from "./pages/MetricsPage";
 import { OverviewPage } from "./pages/OverviewPage";
@@ -65,10 +66,16 @@ export default function App() {
         return (
           <GrowthPage
             profile={profile}
-            onComplete={() => {
-              markComplete("growth");
-              setTab("topic");
-            }}
+            onNavigate={setTab}
+            onComplete={() => markComplete("growth")}
+          />
+        );
+      case "diagnosis":
+        return (
+          <DiagnosisPage
+            profile={profile}
+            onNavigate={setTab}
+            onComplete={() => markComplete("growth")}
           />
         );
       case "metrics":
