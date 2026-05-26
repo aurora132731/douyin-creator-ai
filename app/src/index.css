@@ -2,6 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Light mode（系统浅色 · macOS/Win11 风格）── */
+:root {
+  --bg-app: #f2f2f7;
+  --bg-sidebar: #fbfbfc;
+  --bg-header: #ffffff;
+  --bg-card: #ffffff;
+  --bg-muted: #eef0f4;
+  --bg-inset: #e4e6ec;
+  --border: #d4d8e0;
+  --border-subtle: #e8ebf0;
+  --text-primary: #1c1c1e;
+  --text-secondary: #5a5a66;
+  --text-tertiary: #8e8e98;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 1px 4px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.03);
+  --scrollbar: #c8ccd4;
+  --scrollbar-hover: #aeb4bf;
+  --radar-panel: #ffffff;
+  --radar-grid: #d8dce3;
+  --radar-axis: #e2e5eb;
+  --radar-peer-stroke: #94a3b8;
+  --radar-peer-fill: rgba(148, 163, 184, 0.18);
+  --radar-scale: #94a3b8;
+  --nav-hover: #eef0f4;
+  --nav-active-bg: rgba(37, 244, 238, 0.1);
+}
+
+/* ── Dark mode（系统深色 · 分割线统一 #2a2a35 深灰）── */
+html.dark {
+  --bg-app: #0f0f12;
+  --bg-sidebar: #0f0f12;
+  --bg-header: #0f0f12;
+  --bg-card: #1a1a22;
+  --bg-muted: #1a1a22;
+  --bg-inset: #24242c;
+  /* 布局分割 / 卡片描边：同一套深灰，仅隐约分界 */
+  --border: #2a2a35;
+  --border-subtle: #2a2a35;
+  --text-primary: #f5f5f7;
+  --text-secondary: #a1a1ad;
+  --text-tertiary: #8b8b9a;
+  --shadow-sm: none;
+  --shadow-card: none;
+  --scrollbar: #3f3f48;
+  --scrollbar-hover: #52525c;
+  --radar-panel: #1a1a1e;
+  --radar-grid: #3f3f48;
+  --radar-axis: #35353c;
+  --radar-peer-stroke: #8b8b96;
+  --radar-peer-fill: rgba(139, 139, 150, 0.15);
+  --radar-scale: #6e6e7a;
+  --nav-hover: #28282d;
+  --nav-active-bg: rgba(37, 244, 238, 0.12);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -14,9 +69,10 @@ body,
 
 body {
   margin: 0;
-  background: #0f0f12;
-  color: #f5f5f7;
+  background: var(--bg-app);
+  color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 ::-webkit-scrollbar {
@@ -25,12 +81,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2a2a35;
+  background: var(--scrollbar);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3a3a48;
+  background: var(--scrollbar-hover);
 }
 
 @layer utilities {
@@ -39,14 +95,53 @@ body {
   }
 
   .glass-card {
-    @apply rounded-2xl border border-douyin-border bg-douyin-card/80 backdrop-blur-sm;
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  html.dark .glass-card,
+  html.dark .btn-ghost,
+  html.dark .input-app {
+    border-color: #2a2a35;
+  }
+
+  /* 深色下显式 border-line 类统一深灰（覆盖个别 hover 浅色） */
+  html.dark .border-line,
+  html.dark .border-line-subtle {
+    border-color: #2a2a35;
   }
 
   .btn-primary {
-    @apply rounded-xl bg-gradient-to-r from-douyin-cyan to-douyin-pink px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-douyin-pink/20 transition hover:opacity-90 active:scale-[0.98];
+    @apply rounded-xl bg-gradient-to-r from-douyin-cyan to-douyin-pink px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-douyin-pink/25 transition hover:opacity-90 active:scale-[0.98];
   }
 
   .btn-ghost {
-    @apply rounded-xl border border-douyin-border bg-douyin-card px-4 py-2 text-sm text-gray-300 transition hover:border-douyin-muted hover:bg-douyin-border/50;
+    border-radius: 0.75rem;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    transition: border-color 0.15s, background-color 0.15s;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--text-tertiary);
+    background: var(--bg-muted);
+    color: var(--text-primary);
+  }
+
+  .input-app {
+    border-radius: 0.5rem;
+    border: 1px solid var(--border);
+    background: var(--bg-muted);
+    color: var(--text-primary);
+    outline: none;
+  }
+
+  .input-app:focus {
+    border-color: #25f4ee;
   }
 }

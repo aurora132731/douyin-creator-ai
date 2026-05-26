@@ -1,4 +1,4 @@
-import { ArrowRight, Lightbulb, Sparkles, TrendingUp } from "lucide-react";
+﻿import { ArrowRight, Lightbulb, Sparkles, TrendingUp } from "lucide-react";
 import { useMemo } from "react";
 import { generateGrowthInsights } from "../services/aiEngine";
 import type { CreatorProfile, TabId } from "../types";
@@ -19,7 +19,7 @@ export function GrowthPage({ profile, onNavigate, onComplete }: Props) {
           <TrendingUp className="h-6 w-6 text-douyin-pink" />
           成长复盘
         </h1>
-        <p className="mt-1 text-sm text-douyin-muted">
+        <p className="mt-1 text-sm text-fg-muted">
           结合 AI 作品诊断结果，生成下期可执行行动
         </p>
       </header>
@@ -31,7 +31,7 @@ export function GrowthPage({ profile, onNavigate, onComplete }: Props) {
               <Sparkles className="h-5 w-5 text-douyin-pink" />
               先看 AI 作品诊断
             </h2>
-            <p className="mt-1 text-sm text-douyin-muted">
+            <p className="mt-1 text-sm text-fg-muted">
               抖音四段漏斗数据 + 小红书式分维度解读（现状/原因/建议）
             </p>
           </div>
@@ -58,7 +58,7 @@ export function GrowthPage({ profile, onNavigate, onComplete }: Props) {
           <div key={m.label} className="glass-card p-5 text-center">
             <div className="text-2xl font-bold gradient-text">{m.value}</div>
             <div className="mt-1 text-sm font-medium">{m.label}</div>
-            <div className="text-xs text-douyin-muted">
+            <div className="text-xs text-fg-muted">
               {m.sub} · <span className="text-douyin-cyan">{m.src}</span>
             </div>
           </div>
@@ -74,7 +74,7 @@ export function GrowthPage({ profile, onNavigate, onComplete }: Props) {
           {insights.map((tip, i) => (
             <div
               key={i}
-              className="flex gap-3 rounded-xl border border-douyin-border bg-douyin-dark/50 px-4 py-3 text-sm"
+              className="flex gap-3 rounded-xl border border-line bg-muted/50 px-4 py-3 text-sm"
             >
               <span className="font-mono text-douyin-cyan">{i + 1}</span>
               {tip}

@@ -1,4 +1,5 @@
-import { ArrowRight, Bot, Play, RotateCcw, Target, Users, Zap } from "lucide-react";
+﻿import { ArrowRight, Bot, Play, RotateCcw, Target, Users, Zap } from "lucide-react";
+import { DOC_LINKS } from "../config/docLinks";
 import { KPI_DEFINITIONS, LIFECYCLE_STEPS } from "../data/mockData";
 import type { CreatorProfile, MetricSnapshot, TabId } from "../types";
 
@@ -58,7 +59,7 @@ export function OverviewPage({
           <h1 className="text-2xl font-bold">
             你好，<span className="gradient-text">{profile.name}</span>
           </h1>
-          <p className="mt-1 text-sm text-douyin-muted">
+          <p className="mt-1 text-sm text-fg-muted">
             创灵 · 抖音创作者 AI 运营工作台 — 让 AI 能力贯穿选题、创作、发布、审核与成长全链路
           </p>
         </div>
@@ -77,7 +78,7 @@ export function OverviewPage({
           <div key={c.title} className={`glass-card bg-gradient-to-br p-5 ${c.color}`}>
             <c.icon className="mb-3 h-6 w-6 text-douyin-cyan" />
             <h3 className="font-semibold">{c.title}</h3>
-            <p className="mt-1 text-xs leading-relaxed text-douyin-muted">{c.desc}</p>
+            <p className="mt-1 text-xs leading-relaxed text-fg-muted">{c.desc}</p>
           </div>
         ))}
       </div>
@@ -86,7 +87,7 @@ export function OverviewPage({
         <div className="glass-card p-5">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="font-semibold">创作者链路 · 快速开始</h2>
-            <span className="text-xs text-douyin-muted">
+            <span className="text-xs text-fg-muted">
               进度 {completedCount}/5
             </span>
           </div>
@@ -100,13 +101,13 @@ export function OverviewPage({
                     (["topic", "create", "publish", "compliance", "growth"] as TabId[])[i]
                   )
                 }
-                className="flex w-full items-center justify-between rounded-xl border border-douyin-border bg-douyin-dark/50 px-4 py-3 text-left text-sm transition hover:border-douyin-cyan/40 hover:bg-douyin-card"
+                className="flex w-full items-center justify-between rounded-xl border border-line bg-muted/50 px-4 py-3 text-left text-sm transition hover:border-douyin-cyan/40 hover:bg-card"
               >
                 <span>
-                  <span className="mr-2 text-douyin-muted">{i + 1}.</span>
+                  <span className="mr-2 text-fg-muted">{i + 1}.</span>
                   AI {step.label}
                 </span>
-                <ArrowRight className="h-4 w-4 text-douyin-muted" />
+                <ArrowRight className="h-4 w-4 text-fg-muted" />
               </button>
             ))}
           </div>
@@ -114,7 +115,7 @@ export function OverviewPage({
             <button
               type="button"
               onClick={onResetProgress}
-              className="mt-3 flex items-center gap-1 text-xs text-douyin-muted hover:text-white"
+              className="mt-3 flex items-center gap-1 text-xs text-fg-muted hover:text-fg"
             >
               <RotateCcw className="h-3 w-3" />
               重置演示进度
@@ -139,12 +140,12 @@ export function OverviewPage({
               return (
                 <div
                   key={k.key}
-                  className="rounded-xl border border-douyin-border bg-douyin-dark/50 p-3"
+                  className="rounded-xl border border-line bg-muted/50 p-3"
                 >
-                  <div className="text-lg font-bold text-white">
+                  <div className="text-lg font-bold text-fg">
                     {formatKpiValue(k.key, val)}
                   </div>
-                  <div className="text-xs text-douyin-muted">{k.name}</div>
+                  <div className="text-xs text-fg-muted">{k.name}</div>
                 </div>
               );
             })}
@@ -152,13 +153,20 @@ export function OverviewPage({
         </div>
       </div>
 
-      <div className="glass-card border-douyin-cyan/20 bg-gradient-to-r from-douyin-cyan/5 to-douyin-pink/5 p-5">
+      <div className="glass-card border-line-subtle bg-gradient-to-r from-douyin-cyan/5 to-douyin-pink/5 p-5 dark:from-douyin-cyan/8 dark:to-douyin-pink/8">
         <h3 className="font-semibold">面试演示建议（约 3 分钟）</h3>
-        <p className="mt-2 text-sm leading-relaxed text-douyin-muted">
+        <p className="mt-2 text-sm leading-relaxed text-fg-muted">
           点击「开始演示」→ 选题 → 脚本 → 发布 → 合规 →{" "}
-          <strong className="text-white">AI 作品诊断</strong>（开始诊断）→ 指标（四段漏斗+P3）→ 产品方案。本版{" "}
-          <strong className="text-white">GitHub Pages + Mock</strong>。口述稿：{" "}
-          <code className="text-douyin-cyan">docs/面试讲稿.md</code>
+          <strong className="text-fg">AI 作品诊断</strong>（开始诊断）→ 指标（四段漏斗+P3）→ 产品方案。本版{" "}
+          <strong className="text-fg">GitHub Pages + Mock</strong>。口述稿：{" "}
+          <a
+            href={DOC_LINKS.script.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-douyin-cyan underline decoration-douyin-cyan/40 underline-offset-2 hover:text-douyin-pink"
+          >
+            docs/面试讲稿.md
+          </a>
         </p>
       </div>
     </div>

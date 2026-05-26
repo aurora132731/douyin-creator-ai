@@ -1,4 +1,4 @@
-import { Sparkles, X } from "lucide-react";
+﻿import { Sparkles, X } from "lucide-react";
 import type { DiagnosisDimension } from "../types";
 
 interface Props {
@@ -11,14 +11,14 @@ export function DiagnosisModal({ dimension, onClose }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-4 sm:items-center"
+      className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-4 backdrop-blur-sm sm:items-center"
       onClick={onClose}
     >
       <div
-        className="max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-douyin-border bg-douyin-card shadow-2xl"
+        className="max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-line bg-card shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="sticky top-0 flex items-start justify-between border-b border-douyin-border bg-douyin-card p-5">
+        <div className="sticky top-0 flex items-start justify-between border-b border-line bg-card p-5">
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-lg font-bold">{dimension.title}</h2>
@@ -30,25 +30,25 @@ export function DiagnosisModal({ dimension, onClose }: Props) {
                 {isGood ? "较好" : "待提升"}
               </span>
             </div>
-            <p className="mt-1 text-xs text-douyin-muted">{dimension.segmentTip}</p>
+            <p className="mt-1 text-xs text-fg-muted">{dimension.segmentTip}</p>
           </div>
-          <button type="button" onClick={onClose} className="rounded-lg p-1 hover:bg-douyin-border">
+          <button type="button" onClick={onClose} className="rounded-lg p-1 text-fg-muted hover:bg-muted hover:text-fg">
             <X className="h-5 w-5" />
           </button>
         </div>
 
         <div className="space-y-4 p-5">
           <div className="grid grid-cols-3 gap-2 text-center text-xs">
-            <div className="rounded-xl bg-douyin-dark p-3">
-              <div className="text-douyin-muted">{dimension.metricLabel}</div>
+            <div className="rounded-xl bg-muted p-3">
+              <div className="text-fg-muted">{dimension.metricLabel}</div>
               <div className="mt-1 text-lg font-bold">{dimension.metricValue}</div>
             </div>
-            <div className="rounded-xl bg-douyin-dark p-3">
-              <div className="text-douyin-muted">同类中位数</div>
-              <div className="mt-1 text-lg font-bold text-gray-400">{dimension.median}</div>
+            <div className="rounded-xl bg-muted p-3">
+              <div className="text-fg-muted">同类中位数</div>
+              <div className="mt-1 text-lg font-bold text-fg-muted">{dimension.median}</div>
             </div>
-            <div className="rounded-xl bg-douyin-dark p-3">
-              <div className="text-douyin-muted">对标</div>
+            <div className="rounded-xl bg-muted p-3">
+              <div className="text-fg-muted">对标</div>
               <div className="mt-1 text-sm font-medium text-douyin-cyan">{dimension.exceedPercent}</div>
             </div>
           </div>
@@ -58,17 +58,17 @@ export function DiagnosisModal({ dimension, onClose }: Props) {
               <Sparkles className="h-4 w-4" />
               指标解读 · AI
             </h3>
-            <div className="space-y-3 text-sm leading-relaxed text-douyin-muted">
-              <div className="rounded-xl bg-douyin-dark/80 p-3">
-                <strong className="text-gray-300">现状：</strong>
+            <div className="space-y-3 text-sm leading-relaxed text-fg-muted">
+              <div className="rounded-xl bg-muted/80 p-3">
+                <strong className="text-fg">现状：</strong>
                 {dimension.situation}
               </div>
-              <div className="rounded-xl bg-douyin-dark/80 p-3">
-                <strong className="text-gray-300">原因分析：</strong>
+              <div className="rounded-xl bg-muted/80 p-3">
+                <strong className="text-fg">原因分析：</strong>
                 {dimension.cause}
               </div>
-              <div className="rounded-xl bg-douyin-dark/80 p-3">
-                <strong className="text-gray-300">建议：</strong>
+              <div className="rounded-xl bg-muted/80 p-3">
+                <strong className="text-fg">建议：</strong>
                 <ul className="mt-2 list-inside list-disc space-y-1">
                   {dimension.suggestions.map((s, i) => (
                     <li key={i}>{s}</li>
@@ -78,7 +78,7 @@ export function DiagnosisModal({ dimension, onClose }: Props) {
             </div>
           </section>
 
-          <p className="text-center text-[10px] text-douyin-muted">
+          <p className="text-center text-[10px] text-fg-muted">
             交互借鉴小红书笔记诊断 · 指标口径抖音创作者中心 · 演示 Mock · 24h 后可重新分析
           </p>
         </div>

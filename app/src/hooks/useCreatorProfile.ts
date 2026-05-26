@@ -10,17 +10,26 @@ const DEFAULT: CreatorProfile = {
   followers: 28000,
   avgViews: 15000,
   postFrequency: 3,
+  contentGoalDefault: "mixed",
 };
 
+function loadProfile(): CreatorProfile {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return DEFAULT;
+    const parsed = JSON.parse(raw) as Partial<CreatorProfile>;
+    return {
+      ...DEFAULT,
+      ...parsed,
+      contentGoalDefault: parsed.contentGoalDefault ?? "mixed",
+    };
+  } catch {
+    return DEFAULT;
+  }
+}
+
 export function useCreatorProfile() {
-  const [profile, setProfile] = useState<CreatorProfile>(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      return raw ? (JSON.parse(raw) as CreatorProfile) : DEFAULT;
-    } catch {
-      return DEFAULT;
-    }
-  });
+  const [profile, setProfile] = useState<CreatorProfile>(loadProfile);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));

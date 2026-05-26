@@ -1,4 +1,9 @@
-import type { CreatorProfile, DiagnosisDimension, WorkDiagnosisSummary } from "../types";
+import type {
+  CreatorProfile,
+  DiagnosisDimension,
+  PublishedWork,
+  WorkDiagnosisSummary,
+} from "../types";
 
 /** 抖音作品数据详情 · 四段漏斗（总览 Tab） */
 export const DOUYIN_FUNNEL_SEGMENTS = [
@@ -49,41 +54,88 @@ export const P3_QUALITY_FORMULA = {
     "诊断交互借鉴小红书「笔记诊断」：同类中位数对标 + 现状/原因/建议三段式；指标口径以抖音为准。",
 };
 
-export function buildWorkSummary(profile: CreatorProfile): WorkDiagnosisSummary {
-  const titles: Record<string, string> = {
-    美食: "3分钟懒人早餐实测",
-    美妆: "黄皮早八伪素颜跟练",
-    知识: "AI工具提效1分钟说清",
-    剧情: "职场反转短剧·第3集",
-    旅行: "周末城市漫步vlog",
-    健身: "7分钟居家燃脂跟练",
-  };
+const WORK_TITLES: Record<string, [string, string]> = {
+  美食: ["3分钟懒人早餐实测", "电饭煲神仙做法第二弹"],
+  美妆: ["黄皮早八伪素颜跟练", "平价口红春夏试色"],
+  知识: ["AI工具提效1分钟说清", "职场沟通3个避坑"],
+  剧情: ["职场反转短剧·第3集", "社恐真实瞬间合集"],
+  旅行: ["周末城市漫步vlog", "周边游酒店避坑"],
+  健身: ["7分钟居家燃脂跟练", "拉伸跟练新手版"],
+};
+
+export function buildPublishedWorks(profile: CreatorProfile): PublishedWork[] {
+  const [t1, t2] = WORK_TITLES[profile.vertical] ?? ["近期作品 A", "近期作品 B"];
+  const baseViews = profile.stage === "new" ? 1280 : profile.stage === "growing" ? 4860 : 21800;
+  return [
+    {
+      id: "work-1",
+      title: t1,
+      publishDate: "05-08",
+      views: baseViews,
+      likes: profile.stage === "new" ? 42 : 186,
+      comments: profile.stage === "new" ? 8 : 23,
+      duration: "00:32",
+      statusLabel: "数据正常",
+    },
+    {
+      id: "work-2",
+      title: t2,
+      publishDate: "05-02",
+      views: Math.round(baseViews * 0.62),
+      likes: profile.stage === "new" ? 28 : 112,
+      comments: profile.stage === "new" ? 3 : 15,
+      duration: "00:45",
+      statusLabel: "可优化",
+    },
+  ];
+}
+
+export function buildWorkSummary(
+  profile: CreatorProfile,
+  workId: string
+): WorkDiagnosisSummary {
+  const works = buildPublishedWorks(profile);
+  const work = works.find((w) => w.id === workId) ?? works[0];
   return {
-    workTitle: titles[profile.vertical] ?? "近期代表作品",
-    workDate: "05-08 发布",
-    views: profile.stage === "new" ? 1280 : profile.stage === "growing" ? 4860 : 21800,
-    likes: profile.stage === "new" ? 42 : 186,
-    comments: profile.stage === "new" ? 8 : 23,
-    weakestDimensionId: profile.stage === "new" ? "hook" : "engagement",
-    trafficSource: [
-      { name: "推荐", percent: 56 },
-      { name: "搜索", percent: 12 },
-      { name: "关注", percent: 18 },
-      { name: "同城", percent: 9 },
-      { name: "其他", percent: 5 },
-    ],
+    workId: work.id,
+    workTitle: work.title,
+    workDate: `${work.publishDate} 发布`,
+    views: work.views,
+    likes: work.likes,
+    comments: work.comments,
+    weakestDimensionId: workId === "work-2" ? "hook" : profile.stage === "new" ? "hook" : "engagement",
+    trafficSource:
+      workId === "work-2"
+        ? [
+            { name: "推荐", percent: 48 },
+            { name: "搜索", percent: 18 },
+            { name: "关注", percent: 22 },
+            { name: "同城", percent: 8 },
+            { name: "其他", percent: 4 },
+          ]
+        : [
+            { name: "推荐", percent: 56 },
+            { name: "搜索", percent: 12 },
+            { name: "关注", percent: 18 },
+            { name: "同城", percent: 9 },
+            { name: "其他", percent: 5 },
+          ],
     audienceInsight:
-      profile.stage === "new"
-        ? "新用户占比偏低（12%），建议加强推荐流选题与破圈标签。"
-        : "老用户占比 68%，可尝试系列化提升复访，同时用搜索型选题拉新。",
+      workId === "work-2"
+        ? "新用户占比仅 8%，作品主要在老粉中传播，建议优化开头破圈。"
+        : profile.stage === "new"
+          ? "新用户占比偏低（12%），建议加强推荐流选题与破圈标签。"
+          : "老用户占比 68%，可尝试系列化提升复访，同时用搜索型选题拉新。",
   };
 }
 
 export function buildDiagnosisDimensions(
-  profile: CreatorProfile
+  profile: CreatorProfile,
+  workId: string
 ): DiagnosisDimension[] {
   const v = profile.vertical;
-  return [
+  const isWork2 = workId === "work-2";
+  const base = [
     {
       id: "traffic",
       title: "流量转化",
@@ -107,7 +159,8 @@ export function buildDiagnosisDimensions(
         { label: "播放量", value: "276", fanShare: "粉丝 0.7%" },
         { label: "封面点击率", value: "13.1%", fanShare: "粉丝 0%" },
       ],
-      radarScore: 82,
+      radarScore: isWork2 ? 74 : 82,
+      radarPeerScore: isWork2 ? 68 : 71,
     },
     {
       id: "hook",
@@ -133,7 +186,8 @@ export function buildDiagnosisDimensions(
         { label: "2秒退出率", value: "28.2%", fanShare: "粉丝 50%", highlight: true },
         { label: "5秒完播率", value: "35.8%", fanShare: "粉丝 0%" },
       ],
-      radarScore: 45,
+      radarScore: isWork2 ? 38 : 45,
+      radarPeerScore: isWork2 ? 72 : 68,
     },
     {
       id: "engagement",
@@ -158,7 +212,8 @@ export function buildDiagnosisDimensions(
         { label: "评论", value: "0" },
         { label: "分享", value: "1" },
       ],
-      radarScore: 38,
+      radarScore: isWork2 ? 42 : 38,
+      radarPeerScore: isWork2 ? 64 : 66,
     },
     {
       id: "depth",
@@ -183,7 +238,12 @@ export function buildDiagnosisDimensions(
         { label: "全片完播率", value: "17.9%", fanShare: "粉丝 0%" },
         { label: "涨粉数", value: "0" },
       ],
-      radarScore: 42,
+      radarScore: isWork2 ? 48 : 42,
+      radarPeerScore: isWork2 ? 70 : 69,
     },
   ];
+  return base;
 }
+
+/** 生成耗时 Mock（毫秒） */
+export const AI_DIAGNOSIS_GENERATE_MS = 2200;

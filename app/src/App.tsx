@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTheme } from "./hooks/useTheme";
 import { AppFooter } from "./components/AppFooter";
 import { LifecycleBar } from "./components/LifecycleBar";
 import { ProfileBar } from "./components/ProfileBar";
@@ -6,8 +7,9 @@ import { Sidebar } from "./components/Sidebar";
 import { DEFAULT_METRICS } from "./data/mockData";
 import { useCreatorProfile } from "./hooks/useCreatorProfile";
 import { useLifecycleProgress } from "./hooks/useLifecycleProgress";
+import { DEFAULT_TOPIC_SESSION } from "./hooks/useTopicSession";
 import { CompliancePage } from "./pages/CompliancePage";
-import { CreatePage } from "./pages/CreatePage";
+import { CreatePage, type ScriptDraftPayload } from "./pages/CreatePage";
 import { DiagnosisPage } from "./pages/DiagnosisPage";
 import { GrowthPage } from "./pages/GrowthPage";
 import { MetricsPage } from "./pages/MetricsPage";
@@ -15,13 +17,17 @@ import { OverviewPage } from "./pages/OverviewPage";
 import { PrdPage } from "./pages/PrdPage";
 import { PublishPage } from "./pages/PublishPage";
 import { TopicPage } from "./pages/TopicPage";
-import type { TabId } from "./types";
+import type { TabId, TopicSessionContext } from "./types";
 
 export default function App() {
+  const { theme, setTheme } = useTheme();
   const { profile, setProfile } = useCreatorProfile();
   const { completed, markComplete, resetProgress } = useLifecycleProgress();
   const [tab, setTab] = useState<TabId>("overview");
   const [selectedTopic, setSelectedTopic] = useState("");
+  const [topicSession, setTopicSession] = useState<TopicSessionContext>(DEFAULT_TOPIC_SESSION);
+  const [scriptDraft, setScriptDraft] = useState<ScriptDraftPayload | undefined>();
+  const compliancePassed = completed.has("compliance");
 
   const renderPage = () => {
     switch (tab) {
@@ -39,6 +45,8 @@ export default function App() {
         return (
           <TopicPage
             profile={profile}
+            session={topicSession}
+            onSessionChange={setTopicSession}
             onSelectTopic={setSelectedTopic}
             onComplete={() => markComplete("topic")}
           />
@@ -47,21 +55,31 @@ export default function App() {
         return (
           <CreatePage
             profile={profile}
+            session={topicSession}
             selectedTopic={selectedTopic}
             onGoTopic={() => setTab("topic")}
             onComplete={() => markComplete("create")}
+            onScriptDraft={setScriptDraft}
+          />
+        );
+      case "compliance":
+        return (
+          <CompliancePage
+            session={topicSession}
+            upstreamDraft={scriptDraft}
+            onComplete={() => markComplete("compliance")}
           />
         );
       case "publish":
         return (
           <PublishPage
             profile={profile}
+            session={topicSession}
             selectedTopic={selectedTopic}
+            compliancePassed={compliancePassed}
             onComplete={() => markComplete("publish")}
           />
         );
-      case "compliance":
-        return <CompliancePage onComplete={() => markComplete("compliance")} />;
       case "growth":
         return (
           <GrowthPage
@@ -87,23 +105,17 @@ export default function App() {
     }
   };
 
-  const showLifecycle = ["topic", "create", "publish", "compliance", "growth"].includes(
-    tab
-  );
+  const showLifecycle = ["topic", "create", "publish", "compliance", "growth"].includes(tab);
 
   return (
-    <div className="flex h-full min-h-screen bg-douyin-dark">
+    <div className="flex h-full min-h-screen bg-app text-fg">
       <Sidebar active={tab} onNavigate={setTab} />
 
       <main className="flex flex-1 flex-col overflow-hidden">
-        <div className="shrink-0 space-y-3 border-b border-douyin-border bg-douyin-dark/95 p-4 backdrop-blur">
-          <ProfileBar profile={profile} onChange={setProfile} />
+        <div className="shrink-0 space-y-3 border-b border-line-subtle bg-header/95 p-4 backdrop-blur">
+          <ProfileBar profile={profile} onChange={setProfile} theme={theme} onThemeChange={setTheme} />
           {showLifecycle && (
-            <LifecycleBar
-              activeTab={tab}
-              completed={completed}
-              onNavigate={setTab}
-            />
+            <LifecycleBar activeTab={tab} completed={completed} onNavigate={setTab} />
           )}
         </div>
 

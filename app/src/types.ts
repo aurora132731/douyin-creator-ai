@@ -42,20 +42,32 @@ export type DiagnosisStatus = "good" | "warn";
 
 
 
+export type ContentGoal = "exposure" | "seeding" | "mixed";
+
+export interface CommercialBrief {
+  brand: string;
+  product: string;
+  sellingPoints: string;
+  mustMention: string;
+  forbidden: string;
+}
+
+/** 本条视频的选题上下文（选题页 → 创作/合规/发布） */
+export interface TopicSessionContext {
+  contentGoal: ContentGoal;
+  hasCommercial: boolean;
+  brief: CommercialBrief;
+}
+
 export interface CreatorProfile {
-
   name: string;
-
   stage: CreatorStage;
-
   vertical: ContentVertical;
-
   followers: number;
-
   avgViews: number;
-
   postFrequency: number;
-
+  /** 账号默认内容目标 */
+  contentGoalDefault: ContentGoal;
 }
 
 
@@ -78,6 +90,9 @@ export interface TopicSuggestion {
 
   bestFormat: string;
 
+  /** 商单向选题 */
+  isCommercial?: boolean;
+
 }
 
 
@@ -85,6 +100,11 @@ export interface TopicSuggestion {
 export interface ScriptOutline {
 
   hook: string;
+
+  /** 前三秒钩子三选一 */
+  hookOptions: { type: string; text: string }[];
+
+  selectedHookIndex: number;
 
   structure: string[];
 
@@ -192,30 +212,39 @@ export interface DiagnosisDimension {
 
   funnelMetrics: FunnelMetricCard[];
 
+  /** 本篇作品该维度得分 0–100 */
   radarScore: number;
 
+  /** 同类创作者均值（雷达对比层） */
+  radarPeerScore: number;
+
 }
 
 
+
+export interface PublishedWork {
+  id: string;
+  title: string;
+  publishDate: string;
+  views: number;
+  likes: number;
+  comments: number;
+  duration: string;
+  statusLabel: string;
+}
 
 export interface WorkDiagnosisSummary {
-
+  workId: string;
   workTitle: string;
-
   workDate: string;
-
   views: number;
-
   likes: number;
-
   comments: number;
-
   weakestDimensionId: string;
-
   trafficSource: { name: string; percent: number }[];
-
   audienceInsight: string;
-
 }
+
+export type DiagnosisPhase = "select" | "overview" | "generating" | "ready";
 
 

@@ -15,10 +15,24 @@ export const STAGE_DESC = {
 export const LIFECYCLE_STEPS = [
   { id: "topic", label: "选题", icon: "Lightbulb" },
   { id: "create", label: "创作", icon: "PenLine" },
+  { id: "compliance", label: "合规", icon: "Shield" },
   { id: "publish", label: "发布", icon: "Send" },
-  { id: "compliance", label: "审核", icon: "Shield" },
   { id: "growth", label: "成长", icon: "TrendingUp" },
 ] as const;
+
+export const CONTENT_GOAL_LABELS: Record<string, string> = {
+  exposure: "曝光向（破圈/播放）",
+  seeding: "种草向（信任/转化）",
+  mixed: "混合（默认）",
+};
+
+export const EMPTY_BRIEF = {
+  brand: "",
+  product: "",
+  sellingPoints: "",
+  mustMention: "",
+  forbidden: "",
+};
 
 export const TREND_TOPICS: Record<string, string[]> = {
   美食: ["3分钟懒人早餐", "减脂餐一周挑战", "夜市探店避雷", "电饭煲神仙做法"],
@@ -102,6 +116,8 @@ export interface KpiDefinition {
   layer: MetricLayer;
   source: string;
   formula?: string;
+  /** 为 true 时点击精简公式打开详细浮窗（如 P3 权重原理） */
+  formulaDetail?: boolean;
 }
 
 /** L2：AI 产品指标（对齐岗位 JD） */
@@ -131,6 +147,7 @@ export const KPI_DEFINITIONS: KpiDefinition[] = [
     layer: "L2",
     source: "岗位 JD · 内容质量",
     formula: "5秒完播×35% + 全片完播×30% + 互动×20% + CTR×15%",
+    formulaDetail: true,
   },
   {
     key: "growthConversion",

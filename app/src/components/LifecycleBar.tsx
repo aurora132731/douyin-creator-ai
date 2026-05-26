@@ -1,4 +1,4 @@
-import { Check, ChevronRight } from "lucide-react";
+﻿import { Check, ChevronRight } from "lucide-react";
 import { LIFECYCLE_STEPS } from "../data/mockData";
 import type { TabId } from "../types";
 
@@ -19,7 +19,7 @@ const TAB_MAP: Record<string, TabId> = {
 export function LifecycleBar({ activeTab, completed, onNavigate }: Props) {
   return (
     <div className="glass-card flex items-center justify-between gap-2 p-4">
-      <span className="shrink-0 text-xs font-medium text-douyin-muted">创作者链路</span>
+      <span className="shrink-0 text-xs font-medium text-fg-muted">创作者链路</span>
       <div className="flex flex-1 flex-wrap items-center justify-center gap-1">
         {LIFECYCLE_STEPS.map((step, i) => {
           const tab = TAB_MAP[step.id];
@@ -33,10 +33,10 @@ export function LifecycleBar({ activeTab, completed, onNavigate }: Props) {
                 onClick={() => onNavigate(tab)}
                 className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs transition ${
                   isActive
-                    ? "bg-gradient-to-r from-douyin-cyan/20 to-douyin-pink/20 font-medium text-white ring-1 ring-douyin-cyan/40"
+                    ? "bg-gradient-to-r from-douyin-cyan/20 to-douyin-pink/20 font-medium text-fg ring-1 ring-douyin-cyan/40"
                     : isDone
                       ? "text-douyin-cyan"
-                      : "text-douyin-muted hover:text-gray-300"
+                      : "text-fg-muted hover:text-gray-300"
                 }`}
               >
                 {isDone ? (
@@ -55,7 +55,7 @@ export function LifecycleBar({ activeTab, completed, onNavigate }: Props) {
           );
         })}
       </div>
-      <span className="shrink-0 text-[10px] text-douyin-muted">选题 → 创作 → 发布 → 审核 → 成长</span>
+      <span className="shrink-0 text-[10px] text-fg-muted">选题 → 创作 → 发布 → 审核 → 成长</span>
     </div>
   );
 }
