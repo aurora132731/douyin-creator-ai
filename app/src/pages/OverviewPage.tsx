@@ -60,7 +60,7 @@ export function OverviewPage({
             你好，<span className="gradient-text">{profile.name}</span>
           </h1>
           <p className="mt-1 text-sm text-fg-muted">
-            创灵 · 抖音创作者 AI 运营工作台 — 让 AI 能力贯穿选题、创作、发布、审核与成长全链路
+            创灵 · 抖音创作者 AI 运营工作台 — 让 AI 能力贯穿选题、创作、合规、发布与成长全链路
           </p>
         </div>
         <button
@@ -96,11 +96,7 @@ export function OverviewPage({
               <button
                 key={step.id}
                 type="button"
-                onClick={() =>
-                  onNavigate(
-                    (["topic", "create", "publish", "compliance", "growth"] as TabId[])[i]
-                  )
-                }
+                onClick={() => onNavigate(step.id as TabId)}
                 className="flex w-full items-center justify-between rounded-xl border border-line bg-muted/50 px-4 py-3 text-left text-sm transition hover:border-douyin-cyan/40 hover:bg-card"
               >
                 <span>
@@ -156,7 +152,7 @@ export function OverviewPage({
       <div className="glass-card border-line-subtle bg-gradient-to-r from-douyin-cyan/5 to-douyin-pink/5 p-5 dark:from-douyin-cyan/8 dark:to-douyin-pink/8">
         <h3 className="font-semibold">面试演示建议（约 3 分钟）</h3>
         <p className="mt-2 text-sm leading-relaxed text-fg-muted">
-          点击「开始演示」→ 选题 → 脚本 → 发布 → 合规 →{" "}
+          点击「开始演示」→ 选题 → 脚本 → 合规 → 发布 →{" "}
           <strong className="text-fg">AI 作品诊断</strong>（开始诊断）→ 指标（四段漏斗+P3）→ 产品方案。本版{" "}
           <strong className="text-fg">GitHub Pages + Mock</strong>。口述稿：{" "}
           <a

@@ -27,6 +27,7 @@ export default function App() {
   const [selectedTopic, setSelectedTopic] = useState("");
   const [topicSession, setTopicSession] = useState<TopicSessionContext>(DEFAULT_TOPIC_SESSION);
   const [scriptDraft, setScriptDraft] = useState<ScriptDraftPayload | undefined>();
+  const [diagnosisWorkId, setDiagnosisWorkId] = useState<string | null>(null);
   const compliancePassed = completed.has("compliance");
 
   const renderPage = () => {
@@ -47,6 +48,7 @@ export default function App() {
             profile={profile}
             session={topicSession}
             onSessionChange={setTopicSession}
+            onProfileChange={setProfile}
             onSelectTopic={setSelectedTopic}
             onComplete={() => markComplete("topic")}
           />
@@ -84,7 +86,12 @@ export default function App() {
         return (
           <GrowthPage
             profile={profile}
+            metrics={DEFAULT_METRICS}
             onNavigate={setTab}
+            onStartDiagnosis={(workId) => {
+              setDiagnosisWorkId(workId);
+              setTab("diagnosis");
+            }}
             onComplete={() => markComplete("growth")}
           />
         );
@@ -94,6 +101,7 @@ export default function App() {
             profile={profile}
             onNavigate={setTab}
             onComplete={() => markComplete("growth")}
+            initialWorkId={diagnosisWorkId}
           />
         );
       case "metrics":
@@ -105,7 +113,7 @@ export default function App() {
     }
   };
 
-  const showLifecycle = ["topic", "create", "publish", "compliance", "growth"].includes(tab);
+  const showLifecycle = ["topic", "create", "compliance", "publish", "growth"].includes(tab);
 
   return (
     <div className="flex h-full min-h-screen bg-app text-fg">

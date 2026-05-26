@@ -1,11 +1,10 @@
 ﻿import type { ContentGoal, CreatorProfile, ContentVertical, CreatorStage } from "../types";
-import { CONTENT_GOAL_LABELS, STAGE_DESC, STAGE_LABELS } from "../data/mockData";
+import { STAGE_DESC, STAGE_LABELS } from "../data/mockData";
 import type { ThemeMode } from "../hooks/useTheme";
 import { ThemeToggle } from "./ThemeToggle";
 
 const VERTICALS: ContentVertical[] = ["美食", "美妆", "知识", "剧情", "旅行", "健身"];
 const STAGES: CreatorStage[] = ["new", "growing", "established"];
-const GOALS: ContentGoal[] = ["exposure", "seeding", "mixed"];
 
 interface Props {
   profile: CreatorProfile;
@@ -61,24 +60,7 @@ export function ProfileBar({ profile, onChange, theme, onThemeChange }: Props) {
         </select>
       </label>
 
-      <label className="flex flex-col gap-1">
-        <span className="text-[10px] text-fg-muted">默认内容目标</span>
-        <select
-          value={profile.contentGoalDefault ?? "mixed"}
-          onChange={(e) =>
-            onChange({ ...profile, contentGoalDefault: e.target.value as ContentGoal })
-          }
-          className="input-app max-w-[140px] px-2 py-1 text-xs"
-        >
-          {GOALS.map((g) => (
-            <option key={g} value={g}>
-              {CONTENT_GOAL_LABELS[g]}
-            </option>
-          ))}
-        </select>
-      </label>
-
-      <p className="hidden flex-1 text-xs text-fg-muted lg:block">{STAGE_DESC[profile.stage]}</p>
+      <p className="flex-1 text-xs text-fg-muted">{STAGE_DESC[profile.stage]}</p>
 
       <ThemeToggle theme={theme} onChange={onThemeChange} />
 

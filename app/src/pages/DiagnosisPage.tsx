@@ -30,6 +30,7 @@ interface Props {
   profile: CreatorProfile;
   onNavigate: (tab: TabId) => void;
   onComplete: () => void;
+  initialWorkId?: string | null;
 }
 
 type WorkSortKey = "date" | "views" | "engagement";
@@ -40,9 +41,11 @@ function parsePublishDate(md: string): number {
   return (m || 0) * 100 + (d || 0);
 }
 
-export function DiagnosisPage({ profile, onNavigate, onComplete }: Props) {
+export function DiagnosisPage({ profile, onNavigate, onComplete, initialWorkId }: Props) {
   const works = useMemo(() => buildPublishedWorks(profile), [profile]);
-  const [selectedWorkId, setSelectedWorkId] = useState<string | null>(null);
+  const [selectedWorkId, setSelectedWorkId] = useState<string | null>(
+    initialWorkId ?? works[0]?.id ?? null
+  );
   const [phase, setPhase] = useState<DiagnosisPhase>("select");
   const [activeDim, setActiveDim] = useState<DiagnosisDimension | null>(null);
   const [workFilter, setWorkFilter] = useState<WorkFilterKey>("all");
@@ -74,6 +77,13 @@ export function DiagnosisPage({ profile, onNavigate, onComplete }: Props) {
     [profile, selectedWorkId]
   );
   const weakest = dimensions.find((d) => d.id === summary?.weakestDimensionId);
+
+  useEffect(() => {
+    if (initialWorkId) {
+      setSelectedWorkId(initialWorkId);
+      setPhase("select");
+    }
+  }, [initialWorkId]);
 
   useEffect(() => {
     if (phase !== "generating") return;

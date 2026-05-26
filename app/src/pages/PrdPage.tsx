@@ -22,7 +22,7 @@ const SECTIONS = [
   },
   {
     title: "1. 背景 & 目标",
-    content: `覆盖 JD 全链路：选题→创作→发布→审核→成长→AI作品诊断`,
+    content: `覆盖 JD 全链路：选题→创作→合规→发布→成长→AI作品诊断`,
   },
   {
     title: "2. 用户分层",
@@ -30,7 +30,7 @@ const SECTIONS = [
   },
   {
     title: "3. 功能 MVP",
-    content: `F1选题 F2脚本 F3发布 F4合规 F5成长
+    content: `F1选题 F2脚本 F4合规 F3发布 F5成长
 F5+ AI作品诊断（抖音漏斗+小红书诊断交互）
 F6指标看板 · 本页产品方案`,
   },

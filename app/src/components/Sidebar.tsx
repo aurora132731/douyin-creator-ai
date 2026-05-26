@@ -32,9 +32,9 @@ const NAV: { id: TabId; label: string; icon: typeof LayoutDashboard; group?: str
 
   { id: "create", label: "AI 创作", icon: PenLine },
 
-  { id: "publish", label: "发布助手", icon: Send },
-
   { id: "compliance", label: "合规预检", icon: Shield },
+
+  { id: "publish", label: "发布助手", icon: Send },
 
   { id: "growth", label: "成长复盘", icon: TrendingUp },
 

@@ -8,6 +8,7 @@ interface Props {
   profile: CreatorProfile;
   session: TopicSessionContext;
   onSessionChange: (ctx: TopicSessionContext) => void;
+  onProfileChange: (p: CreatorProfile) => void;
   onSelectTopic: (topic: string) => void;
   onComplete: () => void;
 }
@@ -16,6 +17,7 @@ export function TopicPage({
   profile,
   session,
   onSessionChange,
+  onProfileChange,
   onSelectTopic,
   onComplete,
 }: Props) {
@@ -76,6 +78,10 @@ export function TopicPage({
       </header>
 
       <div className="glass-card space-y-4 p-5">
+        <p className="text-xs leading-relaxed text-fg-muted">
+          <strong className="text-fg">内容目标</strong>（曝光/种草）适用于日常分享与商单，不必先有商单；
+          商单为<strong className="text-fg">可选附加</strong>，开启后叠加 Brief 与 #广告 合规要求。
+        </p>
         <div className="flex flex-wrap items-center gap-3">
           <span className="text-xs text-fg-muted">本条内容目标</span>
           {(["exposure", "seeding", "mixed"] as ContentGoal[]).map((g) => (
@@ -87,6 +93,25 @@ export function TopicPage({
                 session.contentGoal === g
                   ? "bg-douyin-cyan/20 text-douyin-cyan ring-1 ring-douyin-cyan/40"
                   : "bg-muted text-fg-muted hover:text-fg"
+              }`}
+            >
+              {CONTENT_GOAL_LABELS[g]}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 border-t border-line-subtle pt-3">
+          <span className="text-xs text-fg-muted">账号默认目标</span>
+          <span className="text-[10px] text-fg-subtle">（选「混合」时本条沿用）</span>
+          {(["exposure", "seeding", "mixed"] as ContentGoal[]).map((g) => (
+            <button
+              key={`default-${g}`}
+              type="button"
+              onClick={() => onProfileChange({ ...profile, contentGoalDefault: g })}
+              className={`rounded-full px-2.5 py-1 text-[10px] transition ${
+                (profile.contentGoalDefault ?? "mixed") === g
+                  ? "bg-muted text-douyin-cyan ring-1 ring-douyin-cyan/30"
+                  : "text-fg-muted hover:text-fg"
               }`}
             >
               {CONTENT_GOAL_LABELS[g]}

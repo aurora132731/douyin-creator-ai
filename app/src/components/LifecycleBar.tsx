@@ -55,7 +55,7 @@ export function LifecycleBar({ activeTab, completed, onNavigate }: Props) {
           );
         })}
       </div>
-      <span className="shrink-0 text-[10px] text-fg-muted">选题 → 创作 → 发布 → 审核 → 成长</span>
+      <span className="shrink-0 text-[10px] text-fg-muted">选题 → 创作 → 合规 → 发布 → 成长</span>
     </div>
   );
 }
