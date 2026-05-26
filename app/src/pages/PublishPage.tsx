@@ -117,7 +117,7 @@ export function PublishPage({
               <span className="text-xs text-fg-muted">视频简介</span>
               <CopyButton text={draft.description} label="复制简介" />
             </div>
-            <p className="text-sm text-gray-300">{draft.description}</p>
+            <p className="text-sm text-fg-muted">{draft.description}</p>
           </div>
           <div className="rounded-xl border border-line bg-muted/50 p-4">
             <div className="mb-2 flex items-center justify-between">

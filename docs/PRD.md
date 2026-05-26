@@ -521,7 +521,7 @@ git push github main
 
 **发给面试官的最小资料包：**
 
-1. 在线演示：https://aurora132731.github.io/douyin-creator-ai/  
+1. 在线演示：https/aurora132731.github.io/douyin-creator-ai/  
 2. GitHub 仓库：https://github.com/aurora132731/douyin-creator-ai  
 3. 一句话说明：Mock 演示，覆盖全链路与双层指标  
 

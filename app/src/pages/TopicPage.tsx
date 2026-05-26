@@ -10,6 +10,7 @@ interface Props {
   onSessionChange: (ctx: TopicSessionContext) => void;
   onProfileChange: (p: CreatorProfile) => void;
   onSelectTopic: (topic: string) => void;
+  onNavigateToCreate: () => void;
   onComplete: () => void;
 }
 
@@ -19,6 +20,7 @@ export function TopicPage({
   onSessionChange,
   onProfileChange,
   onSelectTopic,
+  onNavigateToCreate,
   onComplete,
 }: Props) {
   const [topics, setTopics] = useState<TopicSuggestion[]>([]);
@@ -60,6 +62,7 @@ export function TopicPage({
     setSelected(t.id);
     onSelectTopic(t.title);
     onComplete();
+    onNavigateToCreate();
   };
 
   return (
@@ -239,7 +242,7 @@ export function TopicPage({
       )}
 
       <div className="glass-card p-4 text-xs text-fg-muted">
-        <strong className="text-gray-300">产品逻辑：</strong>
+        <strong className="text-fg">产品逻辑：</strong>
         选题 = 垂类趋势 × 内容目标（曝光/种草）× 可选商单 Brief。前 3 条在商单模式下会标记合作向标签。
       </div>
     </div>

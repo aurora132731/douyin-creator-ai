@@ -116,7 +116,12 @@ export interface ScriptOutline {
 
 }
 
-
+/** 分镜环节口播 · 三选一 */
+export interface ScriptBeatDraft {
+  framework: string;
+  options: string[];
+  selectedIndex: number;
+}
 
 export interface ComplianceResult {
 

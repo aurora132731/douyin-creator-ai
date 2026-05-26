@@ -50,6 +50,7 @@ export default function App() {
             onSessionChange={setTopicSession}
             onProfileChange={setProfile}
             onSelectTopic={setSelectedTopic}
+            onNavigateToCreate={() => setTab("create")}
             onComplete={() => markComplete("topic")}
           />
         );
@@ -60,6 +61,7 @@ export default function App() {
             session={topicSession}
             selectedTopic={selectedTopic}
             onGoTopic={() => setTab("topic")}
+            onGoCompliance={() => setTab("compliance")}
             onComplete={() => markComplete("create")}
             onScriptDraft={setScriptDraft}
           />
