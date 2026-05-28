@@ -142,35 +142,35 @@ export function TopicPage({
               value={session.brief.brand}
               onChange={(e) => updateBrief("brand", e.target.value)}
               placeholder="品牌名"
-              className="rounded-xl border border-line bg-muted px-3 py-2 text-sm outline-none focus:border-douyin-cyan"
+              className="field-text rounded-xl border border-line px-3 py-2 text-sm"
             />
             <input
               type="text"
               value={session.brief.product}
               onChange={(e) => updateBrief("product", e.target.value)}
               placeholder="产品名"
-              className="rounded-xl border border-line bg-muted px-3 py-2 text-sm outline-none focus:border-douyin-cyan"
+              className="field-text rounded-xl border border-line px-3 py-2 text-sm"
             />
             <input
               type="text"
               value={session.brief.sellingPoints}
               onChange={(e) => updateBrief("sellingPoints", e.target.value)}
               placeholder="核心卖点（1-2句）"
-              className="rounded-xl border border-line bg-muted px-3 py-2 text-sm outline-none focus:border-douyin-cyan sm:col-span-2"
+              className="field-text rounded-xl border border-line px-3 py-2 text-sm sm:col-span-2"
             />
             <input
               type="text"
               value={session.brief.mustMention}
               onChange={(e) => updateBrief("mustMention", e.target.value)}
               placeholder="必提信息"
-              className="rounded-xl border border-line bg-muted px-3 py-2 text-sm outline-none focus:border-douyin-cyan"
+              className="field-text rounded-xl border border-line px-3 py-2 text-sm"
             />
             <input
               type="text"
               value={session.brief.forbidden}
               onChange={(e) => updateBrief("forbidden", e.target.value)}
               placeholder="禁用表述（逗号分隔）"
-              className="rounded-xl border border-line bg-muted px-3 py-2 text-sm outline-none focus:border-douyin-cyan"
+              className="field-text rounded-xl border border-line px-3 py-2 text-sm"
             />
           </div>
         )}

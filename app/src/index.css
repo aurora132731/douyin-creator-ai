@@ -144,4 +144,21 @@ body {
   .input-app:focus {
     border-color: #25f4ee;
   }
+
+  /* 可编辑区：前景色与主文案一致，避免浅色模式下灰字看不见 */
+  .field-text {
+    color: var(--text-primary);
+    background-color: var(--bg-inset);
+    caret-color: var(--text-primary);
+  }
+
+  .field-text::placeholder {
+    color: var(--text-tertiary);
+    opacity: 1;
+  }
+
+  .field-text:focus {
+    border-color: #25f4ee;
+    outline: none;
+  }
 }

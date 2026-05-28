@@ -229,7 +229,7 @@ export function CreatePage({
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
           placeholder="输入选题，或从选题页采纳…"
-          className="min-w-[200px] flex-1 rounded-xl border border-line bg-muted px-4 py-2.5 text-sm outline-none focus:border-douyin-cyan"
+          className="field-text min-w-[200px] flex-1 rounded-xl border border-line px-4 py-2.5 text-sm"
         />
         <button
           type="button"

@@ -151,7 +151,7 @@ export function CompliancePage({ session, upstreamDraft, onComplete }: Props) {
                 value={beat.options[beat.selectedIndex] ?? ""}
                 onChange={(e) => updateBeatText(i, e.target.value)}
                 rows={3}
-                className="mt-1 w-full resize-none rounded-xl border border-line bg-muted px-4 py-3 text-sm outline-none focus:border-douyin-cyan"
+                className="field-text mt-1 w-full resize-none rounded-xl border border-line px-4 py-3 text-sm"
               />
             </label>
           ))}
@@ -165,7 +165,7 @@ export function CompliancePage({ session, upstreamDraft, onComplete }: Props) {
                 setResult(null);
               }}
               rows={2}
-              className="mt-1 w-full resize-none rounded-xl border border-line bg-muted px-4 py-3 text-sm outline-none focus:border-douyin-cyan"
+              className="field-text mt-1 w-full resize-none rounded-xl border border-line px-4 py-3 text-sm"
             />
           </label>
         </div>
@@ -183,7 +183,7 @@ export function CompliancePage({ session, upstreamDraft, onComplete }: Props) {
               setResult(null);
             }}
             placeholder="标题文案…"
-            className="mt-1 w-full rounded-xl border border-line bg-muted px-4 py-2.5 text-sm outline-none focus:border-douyin-cyan"
+            className="field-text mt-1 w-full rounded-xl border border-line px-4 py-2.5 text-sm"
           />
         </label>
 
@@ -195,7 +195,7 @@ export function CompliancePage({ session, upstreamDraft, onComplete }: Props) {
               readOnly
               placeholder="请从创作页生成脚本后进入…"
               rows={4}
-              className="mt-1 w-full resize-none rounded-xl border border-line bg-muted px-4 py-3 text-sm outline-none"
+              className="field-text mt-1 w-full resize-none rounded-xl border border-line px-4 py-3 text-sm opacity-90"
             />
           </label>
         )}
